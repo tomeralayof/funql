@@ -1,0 +1,25 @@
+{
+  "name": "funql",
+  "version": "1.0.0",
+  "description": "FunQL is a delightful and intuitive SQLite wrapper designed to bring joy to your database interactions. With FunQL, working with SQL and managing SQLite databases becomes a fun and enjoyable experience. It provides a clean and expressive API that simplifies common database operations, allowing you to focus on your application logic rather than dealing with low-level database details.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomeralayof/funql.git"
+  },
+  "keywords": [
+    "funql"
+  ],
+  "author": "tomer alayof",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomeralayof/funql/issues"
+  },
+  "homepage": "https://github.com/tomeralayof/funql#readme",
+  "dependencies": {
+    "sqlite": "^4.2.1"
+  }
+}
