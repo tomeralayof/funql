@@ -1,6 +1,4 @@
-function helloWorld() {
+import { Sqlite } from "./public/sqlite";
 
-    return 'hello world 1';
-}
 
-export { helloWorld };
+export { Sqlite };

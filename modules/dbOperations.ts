@@ -7,31 +7,38 @@ class DbOperations {
         this.sqliteContainer = sqliteContainer;
     }
 
-    readQquery (query : string) {
-        const allDbFunction = () => {
-            this.sqliteContainer.all(query, condition ? conditionValues : [], (err, rows) => {
-                if (err) {
-                  console.error(err);
-                  callback(err, null);
-                } else {
-                  callback(null, rows);
-                }
-                this.sqliteContainer.close();
-              });
-        };
+    async runOperation(query : any, msg : string) {
+      try {
+       const result = await this.runQuery(query,msg);
+       this.sqliteContainer.close();
+       return result;
+     } catch (error) {
+       this.sqliteContainer.close();
+       throw error;
+     }
+  }
+
+
+    selectOperation (query : string, msg : string) {
+      try {
+        const result =  this.select(query,msg);
+        return result;
+      } catch (error) {
+        throw error;
+      }
     }
 
-
-    async executeRunQuery(query : any, msg : string) {
-        try {
-         const result = await this.runQuery(query,msg);
-         this.sqliteContainer.close();
-         return result;
-       } catch (error) {
-         this.sqliteContainer.close();
-         throw error;
-       }
-   }
+    /* query : `SELECT * FROM tablename WHERE ${conditionString}` */
+    private select (query : string,msg : string) {
+      this.sqliteContainer.all(query, (error, rows) => {
+        if (error) {
+          console.error('Error executing query:', error);
+          throw error;
+        } else {
+          console.log(msg, rows);
+        }
+      });
+    };
 
     async runQuery (query: string, successMessage: string): Promise<any> {
         await new Promise<any>((resolve, reject) => {

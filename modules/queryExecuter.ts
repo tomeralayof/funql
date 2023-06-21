@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
 
-import { ExecuterMethodsEnum } from '../enums/executer';
+import { ExecuterMethodsEnum } from '../types/enums/executer';
 
 import { DbOperations } from './dbOperations';
 
@@ -12,11 +12,11 @@ class QueryExecuter {
         this.dbOprations = new DbOperations(sqliteContainer);
     }
 
-    async execute(query : any ,msg : string, command : ExecuterMethodsEnum ) {
+    async execute(executerCommand : Record<string,any> , command : ExecuterMethodsEnum ) {
       switch (command) {
         case ExecuterMethodsEnum.CREATE || ExecuterMethodsEnum.INSERT:
-          return this.dbOprations.executeRunQuery(query,msg);
-        case ExecuterMethodsEnum.READ:      
+          return this.dbOprations.runOperation(executerCommand.query,executerCommand.msg);
+        case ExecuterMethodsEnum.READ:
         default:
           break;
       }

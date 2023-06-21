@@ -1,6 +1,6 @@
 interface ReadTableInterface {
     tableName: string;
-    condition?: Record<string, any>;
+    condition?: Record <string, any>;
 };
 
 export { ReadTableInterface };

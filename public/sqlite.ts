@@ -1,10 +1,9 @@
 import sqlite3 from 'sqlite3';
 
-
-import { DbInterface } from '../interfaces/dbInterface';
-import { CreateTableInterface } from "../interfaces/createTableInterface";
-import { InsertTableInterface } from '../interfaces/insertTableInterface';
-import { ReadTableInterface } from '../interfaces/readTableInterface';
+import { DbInterface } from '../types/interfaces/dbInterface';
+import { CreateTableInterface } from '../types/interfaces/createTableInterface';
+import { InsertTableInterface } from '../types/interfaces/insertTableInterface';
+import { ReadTableInterface } from '../types/interfaces/readTableInterface';
 
 import { SqlTable } from "../modules/sqlTable";
 
@@ -16,6 +15,15 @@ class Sqlite implements DbInterface {
         this.sqlTable = new SqlTable(this.initSqlite(path));
     }
     
+    /**
+    * Creates a new table in the database.
+    * 
+    * @param {CreateTableInterface} data - The data object containing table creation parameters.
+    * @param {string} data.tableName - The name of the table.
+    * @param {Record<string, string>} data.tableColumns - The columns of the table, represented as a record of column names and their respective data types.
+    * @returns {Promise<void>} A Promise that resolves when the table is successfully created.
+    * @throws { Error } If there is an error during table creation.
+    */
     public async create(data : CreateTableInterface ) : Promise<void> {
         try {
             await this.sqlTable.createTable(data);
