@@ -10,68 +10,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DbOperations = void 0;
+const util_1 = require("util");
 class DbOperations {
     constructor(sqliteContainer) {
         this.sqliteContainer = sqliteContainer;
     }
-    runOperation(query, msg) {
+    /*
+    access the data base in the terminal:
+    - sqlite3 users.db
+    - .tables
+    - SELECT * FROM keys;
+    -DROP TABLE IF EXISTS table_name;
+    - exit
+    */
+    runOperation(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const runOperationAsync = (0, util_1.promisify)(this.sqliteContainer.run).bind(this.sqliteContainer);
+            return this.run(query, runOperationAsync);
+        });
+    }
+    run(query, cb) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.runQuery(query, msg);
+                const result = yield cb(query);
                 this.sqliteContainer.close();
-                return result;
             }
             catch (error) {
+                console.log("catch run ..");
                 this.sqliteContainer.close();
-                throw error;
+                throw new Error(error.toString());
             }
         });
     }
-    selectOperation(query, msg) {
-        try {
-            const result = this.select(query, msg);
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-    /* query : `SELECT * FROM tablename WHERE ${conditionString}` */
-    select(query, msg) {
-        this.sqliteContainer.all(query, (error, rows) => {
-            if (error) {
-                console.error('Error executing query:', error);
-                throw error;
-            }
-            else {
-                console.log(msg, rows);
-            }
-        });
-    }
-    ;
-    runQuery(query, successMessage) {
+    selectOperation(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield new Promise((resolve, reject) => {
-                this.sqliteContainer.run(query, (error) => {
-                    if (error) {
-                        this.errorHandler(`error ${successMessage}`, successMessage, error);
-                        reject(error);
-                    }
-                    else {
-                        resolve(undefined);
-                    }
-                });
-            });
+            const runOperation = this.sqliteContainer.all;
+            return this.run(query, runOperation);
         });
-    }
-    ;
-    errorHandler(errorMsg, successMsg, error) {
-        if (error) {
-            console.log(errorMsg, error);
-        }
-        else {
-            console.log(successMsg);
-        }
     }
 }
 exports.DbOperations = DbOperations;

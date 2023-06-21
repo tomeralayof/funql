@@ -4,7 +4,8 @@ import { CreateTableInterface } from '../types/interfaces/createTableInterface';
 import { InsertTableInterface } from '../types/interfaces/insertTableInterface';
 import { ReadTableInterface } from '../types/interfaces/readTableInterface';
 
-import { PackResult } from '../types/interfaces/packQueryInterface';
+import { PackCreateResult } from '../types/interfaces/packQueryInterface';
+import { PackInsertResult } from '../types/interfaces/packInsertResult';
 
 import { ExecuterMethodsEnum } from '../types/enums/executer';
 
@@ -24,16 +25,17 @@ class SqlTable {
     };
 
     async createTable(data : CreateTableInterface ): Promise<void> {
-      const packData : PackResult = this.packQueries.packCreateSchema(data.tableName,data.tableColumns);
+      const { tableName, tableColumns } = data;
+      const packData : PackCreateResult = this.packQueries.packCreateSchema(tableName,tableColumns);
       const query : string = this.query.create(packData);
       return this.queryExecuter.execute(query,ExecuterMethodsEnum.CREATE);
     };
 
     async insertTable(data : InsertTableInterface) {
-      const packData : PackResult = this.packQueries.packInsertSchema(data.tableName,data.tableColumns);
+      const { tableName, tableRows } = data;
+      const packData : PackInsertResult = this.packQueries.packInsertSchema(tableName,tableRows);
       const query : string = this.query.insert(packData);
-      const insertQuery : string = this.query.insert(data.tableName,data.tableRows);
-      await this.queryExecuter.execute(insertQuery,ExecuterMethodsEnum.INSERT);
+      return this.queryExecuter.execute(query,ExecuterMethodsEnum.INSERT);
     };
 
     async readTable(data : ReadTableInterface) {

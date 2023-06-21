@@ -8,7 +8,10 @@ class PackQuery {
             .join(', ');
         return { tableName, query };
     }
-    packInsertSchema() {
+    packInsertSchema(tableName, rowData) {
+        const cols = Object.keys(rowData).join(', ');
+        const values = Object.values(rowData).map(value => `'${value}'`).join(', ');
+        return { tableName, cols, values };
     }
     packUpdateSchema() {
     }

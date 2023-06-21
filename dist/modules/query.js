@@ -5,10 +5,9 @@ class Query {
     create(packQueryResult) {
         return `CREATE TABLE ${packQueryResult.tableName} (${packQueryResult.query});`;
     }
-    insert(tableName, rowData) {
-        const columns = Object.keys(rowData).join(', ');
-        const values = Object.values(rowData).map(value => `'${value}'`).join(', ');
-        return `INSERT INTO ${tableName} (${columns}) VALUES (${values});`;
+    insert(packInsertResult) {
+        const { tableName, cols, values } = packInsertResult;
+        return `INSERT INTO ${tableName} (${cols}) VALUES (${values});`;
     }
     get(tableName, condition) {
         let query = `SELECT * FROM ${tableName}`;

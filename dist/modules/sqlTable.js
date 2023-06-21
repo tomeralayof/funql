@@ -23,16 +23,19 @@ class SqlTable {
     ;
     createTable(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const packData = this.packQueries.packCreateSchema(data.tableName, data.tableColumns);
+            const { tableName, tableColumns } = data;
+            const packData = this.packQueries.packCreateSchema(tableName, tableColumns);
             const query = this.query.create(packData);
-            yield this.queryExecuter.execute(query, "Table created successfully!", executer_1.ExecuterMethodsEnum.CREATE);
+            return this.queryExecuter.execute(query, executer_1.ExecuterMethodsEnum.CREATE);
         });
     }
     ;
     insertTable(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const insertQuery = this.query.insert(data.tableName, data.tableRows);
-            yield this.queryExecuter.execute(insertQuery, "data inserted successfuly.", executer_1.ExecuterMethodsEnum.INSERT);
+            const { tableName, tableRows } = data;
+            const packData = this.packQueries.packInsertSchema(tableName, tableRows);
+            const query = this.query.insert(packData);
+            return this.queryExecuter.execute(query, executer_1.ExecuterMethodsEnum.INSERT);
         });
     }
     ;

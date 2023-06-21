@@ -1,17 +1,18 @@
-import { PackResult } from "../types/interfaces/packQueryInterface";
+import { PackCreateResult } from "../types/interfaces/packQueryInterface";
+import { PackInsertResult } from "../types/interfaces/packInsertResult";
 
 class Query {
   
-    create(packQueryResult : PackResult): string {  
+    create(packQueryResult : PackCreateResult): string {  
             return `CREATE TABLE ${packQueryResult.tableName} (${packQueryResult.query});`;
     }
 
-    insert(tableName: string, rowData: Record<string, any>): string {
-        const columns = Object.keys(rowData).join(', ');
-        const values = Object.values(rowData).map(value => `'${value}'`).join(', ');
-        return `INSERT INTO ${tableName} (${columns}) VALUES (${values});`;
+    insert(packInsertResult : PackInsertResult): string {
+        const {tableName,cols,values} = packInsertResult;
+        return `INSERT INTO ${tableName} (${cols}) VALUES (${values});`;
     }
-
+    
+    
 
     get(tableName: string, condition?: Record<string, any>): string {
       let query = `SELECT * FROM ${tableName}`;

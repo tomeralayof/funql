@@ -1,6 +1,6 @@
-interface PackResult {
+interface PackCreateResult {
     tableName: string;
     query: string;
 }
 
-export { PackResult };
+export { PackCreateResult };

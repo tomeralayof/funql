@@ -16,11 +16,11 @@ class QueryExecuter {
     constructor(sqliteContainer) {
         this.dbOprations = new dbOperations_1.DbOperations(sqliteContainer);
     }
-    execute(query, msg, command) {
+    execute(query, command) {
         return __awaiter(this, void 0, void 0, function* () {
             switch (command) {
                 case executer_1.ExecuterMethodsEnum.CREATE || executer_1.ExecuterMethodsEnum.INSERT:
-                    return this.dbOprations.runOperation(query, msg);
+                    return this.dbOprations.runOperation(query);
                 case executer_1.ExecuterMethodsEnum.READ:
                 default:
                     break;

@@ -30,6 +30,7 @@ class Sqlite {
     */
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("i am here");
             try {
                 yield this.sqlTable.createTable(data);
             }
@@ -60,7 +61,6 @@ class Sqlite {
             }
         });
     }
-    /* change ... */
     update(data) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

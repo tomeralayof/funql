@@ -25,6 +25,7 @@ class Sqlite implements DbInterface {
     * @throws { Error } If there is an error during table creation.
     */
     public async create(data : CreateTableInterface ) : Promise<void> {
+        console.log("i am here");
         try {
             await this.sqlTable.createTable(data);
         } catch (error) {
@@ -49,7 +50,6 @@ class Sqlite implements DbInterface {
         }
     }
 
-    /* change ... */
     public async update (data : ReadTableInterface) {
         try {
             const result = await this.sqlTable.readTable(data);
@@ -58,7 +58,7 @@ class Sqlite implements DbInterface {
              throw error;
          }
     };
-
+    
     public async delete (data : ReadTableInterface) {
         try {
             const result = await this.sqlTable.readTable(data);
