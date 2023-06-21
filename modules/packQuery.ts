@@ -1,8 +1,5 @@
 
-interface PackResult {
-    tableName: string;
-    query: string;
-}
+import { PackResult } from "../types/interfaces/packQueryInterface";
 
 class PackQuery {
     
