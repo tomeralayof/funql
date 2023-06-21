@@ -2,9 +2,13 @@
   "name": "funql",
   "version": "1.0.0",
   "description": "FunQL is a delightful and intuitive SQLite wrapper designed to bring joy to your database interactions. With FunQL, working with SQL and managing SQLite databases becomes a fun and enjoyable experience. It provides a clean and expressive API that simplifies common database operations, allowing you to focus on your application logic rather than dealing with low-level database details.",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf dist && npx tsc",
+    "prestart": "npm run build",
+    "start": "node dist/index.js",
+    "preserve": "npm run build",
+    "serve": "concurrently \"npx tsc -w\"  \"nodemon dist/index.js\""
   },
   "repository": {
     "type": "git",
@@ -20,6 +24,14 @@
   },
   "homepage": "https://github.com/tomeralayof/funql#readme",
   "dependencies": {
-    "sqlite": "^4.2.1"
+    "@types/node": "^18.7.16",
+    "concurrently": "^7.4.0",
+    "rimraf": "^3.0.2",
+    "sqlite3": "^5.1.6",
+    "typescript": "^4.8.3"
+  },
+  "devDependencies": {
+    "@types/config": "^3.3.0",
+    "nodemon": "^2.0.19"
   }
 }
