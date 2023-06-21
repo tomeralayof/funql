@@ -26,15 +26,14 @@ class SqlTable {
     async createTable(data : CreateTableInterface ): Promise<void> {
       const packData : PackResult = this.packQueries.packCreateSchema(data.tableName,data.tableColumns);
       const query : string = this.query.create(packData);
-      await this.queryExecuter.execute(query,"Table created successfully!",
-                                        ExecuterMethodsEnum.CREATE);
+      return this.queryExecuter.execute(query,ExecuterMethodsEnum.CREATE);
     };
 
     async insertTable(data : InsertTableInterface) {
-      
+      const packData : PackResult = this.packQueries.packInsertSchema(data.tableName,data.tableColumns);
+      const query : string = this.query.insert(packData);
       const insertQuery : string = this.query.insert(data.tableName,data.tableRows);
-      await this.queryExecuter.execute(insertQuery,"data inserted successfuly.",
-                                        ExecuterMethodsEnum.INSERT);
+      await this.queryExecuter.execute(insertQuery,ExecuterMethodsEnum.INSERT);
     };
 
     async readTable(data : ReadTableInterface) {

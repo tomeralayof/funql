@@ -1,11 +1,11 @@
 import { PackResult } from "../types/interfaces/packQueryInterface";
 
 class Query {
-
+  
     create(packQueryResult : PackResult): string {  
             return `CREATE TABLE ${packQueryResult.tableName} (${packQueryResult.query});`;
     }
-    
+
     insert(tableName: string, rowData: Record<string, any>): string {
         const columns = Object.keys(rowData).join(', ');
         const values = Object.values(rowData).map(value => `'${value}'`).join(', ');

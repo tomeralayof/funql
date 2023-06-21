@@ -12,10 +12,10 @@ class QueryExecuter {
         this.dbOprations = new DbOperations(sqliteContainer);
     }
 
-    async execute(query : string , msg : string ,command : ExecuterMethodsEnum ) {
+    async execute(query : string ,command : ExecuterMethodsEnum ) {
       switch (command) {
         case ExecuterMethodsEnum.CREATE || ExecuterMethodsEnum.INSERT:
-          return this.dbOprations.runOperation(query,msg);
+          return this.dbOprations.runOperation(query);
         case ExecuterMethodsEnum.READ:
         default:
           break;
